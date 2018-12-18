@@ -1,12 +1,15 @@
 package com.vitornicacio.cursomc.domain;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-
+import javax.persistence.ManyToMany;
+import com.vitornicacio.cursomc.domain.Produto;
 
 @Entity
 public class Categoria implements Serializable{
@@ -14,12 +17,13 @@ public class Categoria implements Serializable{
 	
 	@Id
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private int id;
-	
+	private Integer id;
 	private String nome;
 	
+	@ManyToMany(mappedBy="categorias")
+	private List<Produto> produtos = new ArrayList<>();
+	
 	public Categoria() {
-		
 	}
 	
 	public Categoria(Integer id, String nome) {
@@ -28,11 +32,11 @@ public class Categoria implements Serializable{
 		this.nome = nome;
 	}
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 
@@ -44,31 +48,18 @@ public class Categoria implements Serializable{
 		this.nome = nome;
 	}
 
-	
-	
-	
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + id;
-		return result;
+	public List<Produto> getProdutos() {
+		return produtos;
 	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Categoria other = (Categoria) obj;
-		if (id != other.id)
-			return false;
-		return true;
-	}
+	public void setProdutos(List<Produto> produtos) {
+		this.produtos = produtos;
+	}	
+
+
+
+
+
 	
 	
 	
