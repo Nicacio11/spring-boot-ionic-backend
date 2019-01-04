@@ -9,42 +9,33 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-
-import com.fasterxml.jackson.annotation.JsonBackReference;
-import com.vitornicacio.cursomc.domain.Categoria;
+import javax.persistence.OneToMany;
 
 @Entity
-public class Produto implements Serializable{
+public class Estado implements Serializable{
+
 	private static final long serialVersionUID = 1L;
 	
 	@Id
- 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	@Column(name="pdt_int_id")
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name="etd_int_id")
 	private Integer id;
-	@Column(name="pdt_str_nome")
+	@Column(name="etd_str_nome")
 	private String nome;
-	@Column(name="pdt_dbl_preco")
-	private Double preco;
 	
-	@JsonBackReference
-	@ManyToMany
-	@JoinTable(name = "PRODUTO_CATEGORIA",
-		joinColumns = @JoinColumn(name = "pdt_int_id"),
-		inverseJoinColumns = @JoinColumn(name = "ctg_int_id")
-	)
-	private List<Categoria> categorias = new ArrayList<>();
+	@OneToMany(mappedBy="estado")
+	List<Cidade> cidades = new ArrayList<Cidade>();
+
 	
-	public Produto() {	
+	
+	public Estado() {
+		super();
 	}
 
-	public Produto(Integer id, String nome, Double preco) {
+	public Estado(Integer id, String nome) {
 		super();
 		this.id = id;
 		this.nome = nome;
-		this.preco = preco;
 	}
 
 	public Integer getId() {
@@ -63,20 +54,12 @@ public class Produto implements Serializable{
 		this.nome = nome;
 	}
 
-	public Double getPreco() {
-		return preco;
+	public List<Cidade> getCidades() {
+		return cidades;
 	}
 
-	public void setPreco(Double preco) {
-		this.preco = preco;
-	}
-
-	public List<Categoria> getCategorias() {
-		return categorias;
-	}
-
-	public void setCategorias(List<Categoria> categorias) {
-		this.categorias = categorias;
+	public void setCidades(List<Cidade> cidades) {
+		this.cidades = cidades;
 	}
 
 	@Override
@@ -95,7 +78,7 @@ public class Produto implements Serializable{
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Produto other = (Produto) obj;
+		Estado other = (Estado) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -103,8 +86,6 @@ public class Produto implements Serializable{
 			return false;
 		return true;
 	}
-
-
 	
 	
 	

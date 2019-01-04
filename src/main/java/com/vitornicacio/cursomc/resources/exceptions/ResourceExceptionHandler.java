@@ -1,4 +1,4 @@
-package com.vitornicacio.cursomc.repositories.exceptions;
+package com.vitornicacio.cursomc.resources.exceptions;
 
 import javax.servlet.http.HttpServletRequest;
 
