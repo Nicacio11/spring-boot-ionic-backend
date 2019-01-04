@@ -22,7 +22,7 @@ public class Cidade implements Serializable{
 	private String nome;
 	
 	@ManyToOne
-	@JoinColumn(name="etd_int_id")
+	@JoinColumn(name="est_int_id")
 	private Estado estado;
 	
 	
