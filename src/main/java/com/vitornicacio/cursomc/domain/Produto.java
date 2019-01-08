@@ -37,7 +37,7 @@ public class Produto implements Serializable{
 	@JsonIgnore
 	private Set<ItemPedido> itens = new HashSet<ItemPedido>();
 	
-	@JsonBackReference
+	@JsonIgnore
 	@ManyToMany
 	@JoinTable(name = "PRODUTO_CATEGORIA",
 		joinColumns = @JoinColumn(name = "pdt_int_id"),
