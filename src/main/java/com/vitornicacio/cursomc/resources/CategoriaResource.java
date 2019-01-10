@@ -26,9 +26,9 @@ public class CategoriaResource {
 	private CategoriaService service;
 	
 	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public ResponseEntity<?> listar(@PathVariable Integer id) throws ObjectNotFoundException {
+	public ResponseEntity<Categoria> listar(@PathVariable Integer id) throws ObjectNotFoundException {
 		
-		Categoria obj = service.buscar(id);
+		Categoria obj = service.find(id);
 		return ResponseEntity.ok().body(obj);	
 	}
 	
@@ -39,4 +39,11 @@ public class CategoriaResource {
 				.path("/{id}").buildAndExpand(pCategoria.getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
+	public ResponseEntity<Void> update(@RequestBody Categoria pCategoria, @PathVariable Integer id){
+		pCategoria.setId(id);
+		pCategoria = service.update(pCategoria);
+		return ResponseEntity.noContent().build();
+	}
+	
 }

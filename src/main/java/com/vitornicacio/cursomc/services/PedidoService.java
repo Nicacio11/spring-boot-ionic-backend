@@ -16,7 +16,7 @@ public class PedidoService {
 	private PedidoRepository repository;
 	
 	
-	public Pedido buscar(Integer id) throws ObjectNotFoundException {
+	public Pedido find(Integer id) throws ObjectNotFoundException {
 		Optional<Pedido> lObjeto = repository.findById(id);
 		
 		return lObjeto.orElseThrow(
