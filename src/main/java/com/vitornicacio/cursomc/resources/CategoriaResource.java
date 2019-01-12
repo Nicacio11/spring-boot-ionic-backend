@@ -2,6 +2,9 @@ package com.vitornicacio.cursomc.resources;
 
 
 import java.net.URI;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +16,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.vitornicacio.cursomc.domain.Categoria;
+import com.vitornicacio.cursomc.dto.CategoriaDTO;
 import com.vitornicacio.cursomc.services.CategoriaService;
 
 import javassist.tools.rmi.ObjectNotFoundException;
@@ -51,4 +55,15 @@ public class CategoriaResource {
 		return ResponseEntity.noContent().build();
 	}
 	
+	@RequestMapping(method = RequestMethod.GET)
+	public ResponseEntity<List<CategoriaDTO>> findAll() {
+		
+		List<Categoria> lista = service.findAll();
+		List<CategoriaDTO> categorias = lista.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
+		
+		//List<CategoriaDTO> teste = new ArrayList();
+		//lista.forEach(obj -> teste.add(new CategoriaDTO(obj)));
+		
+		return ResponseEntity.ok().body(categorias);	
+	}
 }
