@@ -6,8 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.vitornicacio.cursomc.domain.Pedido;
-import com.vitornicacio.cursomc.expections.ObjectNotFoundException;
 import com.vitornicacio.cursomc.repositories.PedidoRepository;
+import com.vitornicacio.cursomc.services.expections.ObjectNotFoundException;
 
 @Service
 public class PedidoService {
@@ -23,5 +23,6 @@ public class PedidoService {
 				()-> new ObjectNotFoundException(
 						"Objeto não encontrado! id:"+id+", Tipo: "+ Pedido.class.getName())
 				);
+				
 	}
 }

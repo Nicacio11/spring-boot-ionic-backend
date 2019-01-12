@@ -1,4 +1,4 @@
-package com.vitornicacio.cursomc.expections;
+package com.vitornicacio.cursomc.services.expections;
 
 public class ObjectNotFoundException extends RuntimeException{
 
