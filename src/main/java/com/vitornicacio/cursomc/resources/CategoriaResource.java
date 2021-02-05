@@ -5,6 +5,8 @@ import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.validation.Valid;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
@@ -38,16 +40,18 @@ public class CategoriaResource {
 	}
 	
 	@RequestMapping(method = RequestMethod.POST)
-	public ResponseEntity<Void> insert (@RequestBody Categoria pCategoria){
-		pCategoria = service.insert(pCategoria);
+	public ResponseEntity<Void> insert (@Valid @RequestBody CategoriaDTO objDto){
+		Categoria lCategoria = service.fromDto(objDto);
+		lCategoria = service.insert(lCategoria);
 		URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
-				.path("/{id}").buildAndExpand(pCategoria.getId()).toUri();
+				.path("/{id}").buildAndExpand(lCategoria .getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
-	public ResponseEntity<Void> update(@RequestBody Categoria pCategoria, @PathVariable Integer id){
-		pCategoria.setId(id);
-		pCategoria = service.update(pCategoria);
+	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO	 objDTO, @PathVariable Integer id){
+		Categoria lCategoria = service.fromDto(objDTO);
+		lCategoria.setId(id);
+		lCategoria = service.update(lCategoria);
 		return ResponseEntity.noContent().build();
 	}
 	@RequestMapping(value="/{id}", method = RequestMethod.DELETE)
