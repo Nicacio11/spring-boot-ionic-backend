@@ -32,7 +32,7 @@ public class Cliente implements Serializable{
 	private Integer id;
 	@Column(name="clt_str_nome")
 	private String nome;
-	@Column(name="clt_str_email")
+	@Column(name="clt_str_email", unique = true)
 	private String email;
 	@Column(name="clt_str_cpfoucnpj")
 	private String cpfOuCnpj;
