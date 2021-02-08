@@ -32,13 +32,6 @@ public class CategoriaResource {
 	@Autowired
 	private CategoriaService service;
 	
-	@RequestMapping(value="/{id}", method = RequestMethod.GET)
-	public ResponseEntity<Categoria> listar(@PathVariable Integer id) throws ObjectNotFoundException {
-		
-		Categoria obj = service.find(id);
-		return ResponseEntity.ok().body(obj);	
-	}
-	
 	@RequestMapping(method = RequestMethod.POST)
 	public ResponseEntity<Void> insert (@Valid @RequestBody CategoriaDTO objDto){
 		Categoria lCategoria = service.fromDto(objDto);
@@ -47,6 +40,15 @@ public class CategoriaResource {
 				.path("/{id}").buildAndExpand(lCategoria .getId()).toUri();
 		return ResponseEntity.created(uri).build();
 	}
+	
+	@RequestMapping(value="/{id}", method = RequestMethod.GET)
+	public ResponseEntity<Categoria> listar(@PathVariable Integer id) throws ObjectNotFoundException {
+		
+		Categoria obj = service.find(id);
+		return ResponseEntity.ok().body(obj);	
+	}
+	
+
 	@RequestMapping(value="/{id}", method = RequestMethod.PUT)
 	public ResponseEntity<Void> update(@Valid @RequestBody CategoriaDTO	 objDTO, @PathVariable Integer id){
 		Categoria lCategoria = service.fromDto(objDTO);
@@ -66,8 +68,6 @@ public class CategoriaResource {
 		List<Categoria> lista = service.findAll();
 		List<CategoriaDTO> categorias = lista.stream().map(obj -> new CategoriaDTO(obj)).collect(Collectors.toList());
 		
-		//List<CategoriaDTO> teste = new ArrayList();
-		//lista.forEach(obj -> teste.add(new CategoriaDTO(obj)));
 		
 		return ResponseEntity.ok().body(categorias);	
 	}
