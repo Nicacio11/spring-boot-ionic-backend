@@ -1,5 +1,6 @@
 package com.vitornicacio.cursomc.resources;
 
+import java.net.URI;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.vitornicacio.cursomc.domain.Cliente;
 import com.vitornicacio.cursomc.dto.ClienteDTO;
+import com.vitornicacio.cursomc.dto.ClienteNewDTO;
 import com.vitornicacio.cursomc.services.ClienteService;
 
 import javassist.tools.rmi.ObjectNotFoundException;
@@ -31,7 +34,6 @@ public class ClienteResource {
 		
 		@RequestMapping(value="/{id}", method = RequestMethod.GET)
 		public ResponseEntity<Cliente> find(@PathVariable Integer id) throws ObjectNotFoundException {
-			
 			Cliente obj = service.find(id);
 			return ResponseEntity.ok().body(obj);	
 		}
@@ -70,5 +72,14 @@ public class ClienteResource {
 			Page<ClienteDTO> categorias = lista.map(obj -> new ClienteDTO(obj));
 		
 			return ResponseEntity.ok().body(categorias);	
+		}
+		
+		@RequestMapping(method = RequestMethod.POST)
+		public ResponseEntity<Void> insert (@Valid @RequestBody ClienteNewDTO objDto){
+			Cliente lCliente = service.fromDto(objDto);
+			lCliente = service.insert(lCliente);
+			URI uri = ServletUriComponentsBuilder.fromCurrentRequest()
+					.path("/{id}").buildAndExpand(lCliente .getId()).toUri();
+			return ResponseEntity.created(uri).build();
 		}
 }
