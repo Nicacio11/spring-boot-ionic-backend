@@ -25,6 +25,9 @@ public class Categoria implements Serializable{
 	@Column(name="ctg_str_nome")
 	private String nome;
 	
+	@Column(name="teste")
+	private String teste;
+	
 	@ManyToMany(mappedBy="categorias")
 	private List<Produto> produtos = new ArrayList<>();
 	
@@ -59,7 +62,17 @@ public class Categoria implements Serializable{
 
 	public void setProdutos(List<Produto> produtos) {
 		this.produtos = produtos;
+	}
+
+	public String getTeste() {
+		return teste;
+	}
+
+	public void setTeste(String teste) {
+		this.teste = teste;
 	}	
+	
+	
 
 
 
